@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+    <div>
+        <h1 class="text-4xl font-bold">Products</h1>
+        <p class="text-base-content/70 mt-2">Manage your product catalog</p>
+    </div>
+    
+    {% if user.profile.is_admin %}
+    <a href="/add/" class="btn btn-primary btn-lg gap-2">
+        <i class="fas fa-plus"></i>
+        Add Product
+    </a>
+    {% endif %}
+</div>
+
+{% if products %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for p in products %}
+    <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all">
+        <div class="card-body">
+            <h2 class="card-title">
+                {{ p.name }}
+                <div class="badge badge-secondary">₹{{ p.price }}</div>
+            </h2>
+            <p class="text-base-content/70">{{ p.description|truncatechars:80 }}</p>
+            
+            <div class="card-actions justify-end mt-4">
+                <a href="/product/{{p.id}}/" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i>
+                    View
+                </a>
+                
+                {% if user.profile.is_admin %}
+                <a href="/edit/{{p.id}}/" class="btn btn-sm btn-ghost">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="/delete/{{p.id}}/" class="btn btn-sm btn-error btn-outline">
+                    <i class="fas fa-trash"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="hero min-h-[400px] bg-base-200 rounded-box">
+    <div class="hero-content text-center">
+        <div class="max-w-md">
+            <i class="fas fa-box-open text-6xl text-base-content/20 mb-4"></i>
+            <h2 class="text-2xl font-bold">No products yet</h2>
+            <p class="py-4">Start by adding your first product to the catalog.</p>
+            {% if user.profile.is_admin %}
+            <a href="/add/" class="btn btn-primary">
+                <i class="fas fa-plus mr-2"></i>
+                Add First Product
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

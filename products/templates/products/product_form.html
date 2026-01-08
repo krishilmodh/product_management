@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="max-w-2xl mx-auto">
+    <div class="breadcrumbs text-sm mb-4">
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li>{% if product %}Edit{% else %}Add{% endif %} Product</li>
+        </ul>
+    </div>
+
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title text-2xl">
+                <i class="fas fa-box text-primary"></i>
+                {% if product %}Edit Product{% else %}Add New Product{% endif %}
+            </h2>
+            
+            <form method="post" class="space-y-4 mt-4">
+                {% csrf_token %}
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Product Name</span>
+                    </label>
+                    <input type="text" name="name" value="{{ product.name|default:'' }}" placeholder="e.g., Wireless Mouse" class="input input-bordered input-primary" required />
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Description</span>
+                    </label>
+                    <textarea name="description" class="textarea textarea-bordered textarea-primary h-24" placeholder="Product details..." required>{{ product.description|default:'' }}</textarea>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Price (₹)</span>
+                    </label>
+                    <label class="input-group">
+                        <span class="bg-primary text-primary-content">₹</span>
+                        <input type="number" step="0.01" name="price" value="{{ product.price|default:'' }}" placeholder="999.00" class="input input-bordered input-primary w-full" required />
+                    </label>
+                </div>
+                
+                <div class="card-actions justify-end pt-4">
+                    <a href="/" class="btn btn-ghost">
+                        <i class="fas fa-times mr-2"></i>
+                        Cancel
+                    </a>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save mr-2"></i>
+                        Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

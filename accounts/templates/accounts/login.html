@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="hero min-h-[80vh]">
+    <div class="hero-content flex-col lg:flex-row-reverse gap-12">
+        <div class="text-center lg:text-left max-w-md">
+            <h1 class="text-5xl font-bold">Welcome Back!</h1>
+            <p class="py-6">Sign in to manage your products and track inventory with ease.</p>
+        </div>
+        
+        <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <form method="post" class="card-body">
+                {% csrf_token %}
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Username</span>
+                    </label>
+                    <input type="text" name="username" placeholder="Enter username" class="input input-bordered" required />
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Password</span>
+                    </label>
+                    <input type="password" name="password" placeholder="Enter password" class="input input-bordered" required />
+                </div>
+                
+                <div class="form-control mt-6">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Login
+                    </button>
+                </div>
+                
+                <div class="divider">OR</div>
+                
+                <div class="text-center">
+                    <a href="/register/" class="link link-primary">
+                        Create new account
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
